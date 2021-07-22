@@ -17,21 +17,20 @@ const AuthProvider: React.FC = ({children}) => {
       const usr = await AsyncStorage.getItem('user'); // usuario guardado em sessão/storage whatever
 
       if (usr) {
-        setUsuario(JSON.parse(usr));
         setSigned(true);
       }
     }
 
     loadStorage();
-  }, []);
+  }, [usuario]);
 
   const signIn = async () => {
     // Logica para logar.
     try {
-      await AsyncStorage.setItem(
-        'user',
-        JSON.stringify({id: 1, nome: 'Gabriel'}),
-      );
+      const usr = {id: 1, nome: 'Gabriel'};
+      await AsyncStorage.setItem('user', JSON.stringify(usr));
+      setUsuario(usr);
+      console.log('loguei');
     } catch (e) {
       console.log('Deu erro pra salvar');
     }
